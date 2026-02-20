@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "npx ts-node src/views/index.ts"
+    "test1": "npx ts-node src/scripts/index.ts"
   },
   "devDependencies": {
     "@types/node": "^25.3.0",
