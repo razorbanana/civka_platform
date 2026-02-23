@@ -20,6 +20,28 @@ export default function calculateRatings(oldRatingsInstance: Ratings, game: Game
         return (lobbySize - score)/(lobbySize - 1)
     }
 
+    function calcProps(result: Record<string, number>, oldRatings: Record<string, number>){
+        const props: Record<string, MonstosityItemType> = {}
+        Object.keys(result).map(key => {
+            //console.log(`creating props for ${key}`);
+            const obj: MonstosityItemType = {
+                score: normScore(result[key]),
+                mmr: oldRatings[key] ? oldRatings[key] : 1000,
+                averageOpponentMmr: Object.keys(result).reduce((acc, item) => {
+                    if (key != item){
+                        //console.log(`${key}'s opponent is ${item}`)
+                        let opponentMMR = oldRatings[item] ? oldRatings[item] : 1000
+                        //console.log(`${key}'s opponent mmr is ${JSON.stringify(opponentMMR)}`)
+                        return acc + opponentMMR
+                    }
+                    return acc
+                }, 0)/(lobbySize-1)
+            }
+            props[key] = obj
+        })
+        return props
+    }
+
     function calculateExpectedScore(playerRating: number, opponentRating: number){
         return 1/(1+10**((opponentRating - playerRating)/400))
     }
@@ -28,35 +50,17 @@ export default function calculateRatings(oldRatingsInstance: Ratings, game: Game
         return playerRating + k*(score-expectedScore)
     }
 
-    const monstrosity: Record<string, MonstosityItemType> = {}
-    Object.keys(result).map(key => {
-        console.log(`creating moster for ${key}`);
-        const obj: MonstosityItemType = {
-            score: normScore(result[key]),
-            mmr: oldRatings[key] ? oldRatings[key] : 1000,
-            averageOpponentMmr: Object.keys(result).reduce((acc, item) => {
-                if (key != item){
-                    console.log(`${key}'s opponent is ${item}`)
-                    let opponentMMR = oldRatings[item] ? oldRatings[item] : 1000
-                    console.log(`${key}'s opponent mmr is ${JSON.stringify(opponentMMR)}`)
-                    return acc + opponentMMR
-                }
-                return acc
-            }, 0)/(lobbySize-1)
-        }
-        monstrosity[key] = obj
-    })
-    //console.log(monstrosity);
+    
+    const props = calcProps(result, oldRatings)
 
     const newRatings: Record<string, number> = structuredClone(oldRatings)
-    Object.keys(monstrosity).map(key => {
-        const rating = calculateNewRating(monstrosity[key]!.mmr, monstrosity[key]!.score, calculateExpectedScore(monstrosity[key]!.mmr, monstrosity[key]!.averageOpponentMmr))
+    Object.keys(props).map(key => {
+        const rating = calculateNewRating(props[key]!.mmr, props[key]!.score, calculateExpectedScore(props[key]!.mmr, props[key]!.averageOpponentMmr))
         newRatings[key] = rating
     })
-    //console.log(newRatings);
 
-    const finalResult = new Ratings(newRatings)
+    const wrappedRatings = new Ratings(newRatings)
 
-    return finalResult
+    return wrappedRatings
 
 }
