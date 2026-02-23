@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "test1": "npx ts-node src/scripts/index.ts"
+    "test1": "npx ts-node src/scripts/index.ts",
+    "testVal": "npx ts-node src/scripts/testValidate.ts",
+    "test2": "npx ts-node src/scripts/testRatingScoring.ts"
   },
   "devDependencies": {
     "@types/node": "^25.3.0",

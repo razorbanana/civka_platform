@@ -1,32 +1,22 @@
 import playersController from "../controllers/playersController.ts"
-import rankingController from "../controllers/rankingController.ts"
-import type Rankings from "../models/entities/Rankings.ts"
+import ratingController from "../controllers/ratingController.ts"
+import Ratings from "../models/entities/Ratings.ts"
 
 
 //this script is for testing functionality. it will rewrite existing ratings
 console.log("lets check ratings")
 
-const testRankings:Rankings = {
-    rankings: [
-        {
-            player: {
-                name: "Elzaor"
-            },
-            mmr: 1000
-        },
-        {
-            player: {
-                name: "Sanya"
-            },
-            mmr: 1100
-        }
-    ]
+const obj = {
+    Elzaor: 1000,
+    Sanya: 1100
 }
 
-rankingController.rewriteRankings(testRankings)
+const ratings1 = new Ratings(obj)
 
-rankingController.getRankings().then(response => {
-    console.log(response.rankings)
+ratingController.rewriteRatings(ratings1)
+
+ratingController.getRatings().then(response => {
+    console.log(response.getRatings())
 })
 
 playersController.getPlayers().then(response => console.log(response))
