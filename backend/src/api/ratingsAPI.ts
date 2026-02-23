@@ -1,5 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
+import cors from "cors"
 import ratingController from "../controllers/ratingController.ts"
 import Game from "../models/entities/Game.ts"
 dotenv.config()
@@ -7,6 +8,7 @@ const PORT = process.env.EXPRESS_PORT || 3000
 
 const app = express()
 
+app.use(cors())
 app.use(express.json()) 
 
 

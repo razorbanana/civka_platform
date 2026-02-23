@@ -50,7 +50,6 @@ export default function calculateRatings(oldRatingsInstance: Ratings, game: Game
         return playerRating + k*(score-expectedScore)
     }
 
-    
     const props = calcProps(result, oldRatings)
 
     const newRatings: Record<string, number> = structuredClone(oldRatings)
