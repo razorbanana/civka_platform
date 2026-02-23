@@ -3,11 +3,19 @@
   "scripts": {
     "test1": "npx ts-node src/scripts/index.ts",
     "testVal": "npx ts-node src/scripts/testValidate.ts",
-    "test2": "npx ts-node src/scripts/testRatingScoring.ts"
+    "test2": "npx ts-node src/scripts/testRatingScoring.ts",
+    "api": "npx ts-node src/api/ratingsAPI.ts",
+    "devApi": "nodemon --watch 'src/**/*.ts' --exec ts-node src/api/ratingsAPI.ts" 
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^25.3.0",
+    "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
   }
 }

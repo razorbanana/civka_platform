@@ -10,11 +10,11 @@ type MonstosityItemType = {
 export default function calculateRatings(oldRatingsInstance: Ratings, game: Game): Ratings{
     const k = 50
     const result = game.getResult()
-    console.log(`result is ${JSON.stringify(result)}`)
+    //console.log(`result is ${JSON.stringify(result)}`)
     const lobbySize = Object.keys(result).length
-    console.log(`lobbySize is ${lobbySize}`);
+    //console.log(`lobbySize is ${lobbySize}`);
     const oldRatings = oldRatingsInstance.getRatings()
-    console.log(`oldRatings is ${JSON.stringify(oldRatings)}`);
+    //console.log(`oldRatings is ${JSON.stringify(oldRatings)}`);
 
     function normScore(score: number = 0){
         return (lobbySize - score)/(lobbySize - 1)
@@ -46,14 +46,14 @@ export default function calculateRatings(oldRatingsInstance: Ratings, game: Game
         }
         monstrosity[key] = obj
     })
-    console.log(monstrosity);
+    //console.log(monstrosity);
 
     const newRatings: Record<string, number> = structuredClone(oldRatings)
     Object.keys(monstrosity).map(key => {
         const rating = calculateNewRating(monstrosity[key]!.mmr, monstrosity[key]!.score, calculateExpectedScore(monstrosity[key]!.mmr, monstrosity[key]!.averageOpponentMmr))
         newRatings[key] = rating
     })
-    console.log(newRatings);
+    //console.log(newRatings);
 
     const finalResult = new Ratings(newRatings)
 

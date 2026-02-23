@@ -1,1 +1,14 @@
-[{"name":"player1"},{"name":"Sanya"},{"name":"Elzaor"}]
+[
+  {
+    "name": "player1"
+  },
+  {
+    "name": "Sanya"
+  },
+  {
+    "name": "Elzaor"
+  },
+  {
+    "name": "Yamp"
+  }
+]
