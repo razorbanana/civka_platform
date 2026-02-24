@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { getRatings } from './api/ratingsApi'
-import type { Ratings } from './model/types/Ratings'
+
+import AddGameForm from './components/forms/AddGameForm'
+import RatingsPage from './components/pages/RatingsPage'
 
 function App() {
 
-  const [ratings, setRatings] = useState<Ratings>()
-  useEffect(() => {
-    getRatings()
-    .then(response => setRatings(response))
-    .catch(err => console.error(err))
-  }, [])
+  const [addGameFormVisible, setAddGameFormVisible] = useState<boolean>(false)
+  
+  const toggleVisibility = () => {
+    setAddGameFormVisible(!addGameFormVisible)
+  }
 
-  return (
-    <div>
-      {ratings? JSON.stringify(ratings) : "no ratings yet"}
-    </div>
-  )
+  if (addGameFormVisible){
+    return (
+      <AddGameForm toggleVisible={toggleVisibility}></AddGameForm>
+    )
+  }else{
+    return (
+      <RatingsPage toggleVisible={toggleVisibility}></RatingsPage>
+    )
+  }
 }
 
 export default App
